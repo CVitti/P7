@@ -1,0 +1,212 @@
+/* Classes générales */
+
+.hidden{
+    display: none;
+}
+
+.visible{
+    display: inline-block;
+}
+
+.bold500{
+    font-weight: 500;
+}
+
+.bold600{
+    font-weight: 700;
+}
+
+/* Mise en forme du body */
+
+body{
+    max-width: 1440px;
+    margin: auto;
+    font-size: 18px;
+}
+
+/* Mise en forme du logo/header */
+
+header{
+    margin: 30px auto;
+}
+
+header img#logo{
+    margin: auto;
+    height: 93px;
+    width: 278px;
+}
+
+/* Mise en forme du contenu principal */
+
+#main{
+    padding: 0;
+    row-gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mise en forme de la recherche principale */
+
+.searchbar{
+    padding: 0px;
+    margin: 0px;
+    background-color: #E7E7E7;
+    width: 100%;
+    height: 69px;
+    border-radius: 5px;
+    position: relative;
+}
+
+#inputMainSearch{
+    border: none;
+    height: 69px;
+    background-color: transparent;
+    padding-left: 20px;
+    outline-color: #7a7a7a;
+}
+
+#inputMainSearch::placeholder{
+    color: black;
+    opacity: 0.4;
+}
+
+.iconLoupe::before{
+    position: absolute;
+    top: 35px;
+    right: 20px;
+}
+
+/* Mise en forme des tags */
+
+#divTags{
+    margin: 0px;
+    padding: 0px;
+    column-gap: 10px;
+}
+
+div.tag{
+    color: white;
+    border-radius: 5px;
+    width: fit-content;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+div.tagIngredient{
+    background-color: #3282F7;
+}
+
+div.tagAppareil{
+    background-color: #68D9A4;
+}
+
+div.tagUstensile{
+    background-color: #ED6454;
+}
+
+/* Mise en forme des filtres */
+
+#divFilters{
+    margin: 0px;
+    padding: 0px;
+    column-gap: 20px;
+}
+
+.filterBlock{
+    height: 69px;
+    color: white;
+    border-radius: 5px;
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+#filterIngredients{
+    background-color: #3282F7;
+}
+
+#filterAppareils{
+    background-color: #68D9A4;
+}
+
+#filterUstensiles{
+    background-color: #ED6454;
+}
+
+/* Mise en forme de la section qui contient les recettes */
+
+#recipeSection{
+    margin: 0px;
+    margin-bottom: 20px;
+    padding: 0px;
+    row-gap: 20px;
+    column-gap: 3.5%;
+}
+
+/* Article contenant une recette */
+#recipeSection article{
+    margin: 0px;
+    padding: 0px;
+    border-radius: 5px;
+    width: 31%;
+}
+
+/* Partie qui contiendra plsu tard les images des recettes, actuellement seul un fond gris est mis en place */
+.recipePicture{
+    height: 180px;
+    width: 100%;
+    margin: 0px;
+    background-color: #C7BEBE;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* Partie contenant toutes les informations de la recette */
+.recipeInfos{
+    width: 100%;
+    margin: 0px;
+    background-color: #E7E7E7;
+    padding : 15px 20px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    row-gap: 20px;
+    column-gap: 20px;
+}
+
+/* Nom de la recette */
+.divRecipeName{
+    padding: 0px;
+    max-width: calc(100% - 145px);
+}
+
+/* Temps de préparation de la recette */
+.divTimer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    width: 95px;
+}
+
+/* Ingrédients et instructions pour la recette */
+.recipeIngredients, .recipeDescription{
+    width: calc(50% - 10px);
+    height: fit-content;
+    font-size: 13px;
+    padding: 0px;
+}
+
+/* Troncage des paragraphes de description */
+.recipeDescription{  
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+} 
