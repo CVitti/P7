@@ -1,4 +1,4 @@
-const recipes = [
+export const recipes = [
     {
         "id": 1,
         "name" : "Limonade de Coco",
@@ -59,7 +59,7 @@ const recipes = [
                 "quantity" : 5
             },
             {
-                "ingredient" : "Lait de Coco",
+                "ingredient" : "Lait de coco",
                 "quantity" : 100,
                 "unit" : "ml"
             }
@@ -83,7 +83,7 @@ const recipes = [
                 "unit" : "ml"
             },
             {
-                "ingredient": "Coulis de tomate",
+                "ingredient": "Coulis de tomates",
                 "quantity" : 25,
                 "unit" : "cl"
             },
@@ -162,12 +162,12 @@ const recipes = [
                 "quantity": 2
            },
            {
-               "ingredient": "Crème fraiche",
+               "ingredient": "Crème fraîche",
                "quantity": 2,
                "unit": "cuillères à soupe"
            },
            {
-               "ingredient": "gruyère râpé",
+               "ingredient": "Gruyère râpé",
                "quantity": 100,
                "unit": "grammes"
            },
@@ -200,12 +200,12 @@ const recipes = [
                 "quantity": "2"
             },
             {
-                "ingredient":"Crème fraiche",
+                "ingredient":"Crème fraîche",
                 "quantity":25,
                 "unit": "cl"
             },
             {
-                "ingredient": "Sucre en Poudre",
+                "ingredient": "Sucre en poudre",
                 "quantity": 100,
                 "unit":"grammes"
             },
@@ -278,12 +278,12 @@ const recipes = [
                 "quantity": 2
            },
            {
-               "ingredient": "Sucre en Poudre",
+               "ingredient": "Sucre en poudre",
                "quantity": "110",
                "unit": "grammes"
            },
            {
-                "ingredient": "farine",
+                "ingredient": "Farine",
                 "quantity": 90,
                 "unit": "grammes"
            }
@@ -312,7 +312,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Vinaigre Balsamic"
+                "ingredient": "Vinaigre balsamique"
             },
             {
                 "ingredient": "Huile d'olive"
@@ -332,7 +332,7 @@ const recipes = [
         "servings": 4,
         "ingredients":[
             {
-                "ingredient": "Roblochon",
+                "ingredient": "Reblochon",
                 "quantity": "1"
             },
             {
@@ -359,14 +359,14 @@ const recipes = [
         "time": 60,
         "description": "Commencer par cuire les pommes de terre dans l'eau bouillante. Puis epluchez les et coupez les en rondelles. Emincer les oignons puis les faire dorer dans du beurre. Ajouter le jambon fumé coupé en en morceaux ainsi que les pommes de terres. Salez, poivrez à votre gout ( et celui de vos convives ) Laissez cuisiner durant environ 10 minutes puis ajouter le vin blanc. Après 5 minutes, mettre le tout dans un plat à gratin. Coupez le rebelochon, soit en tranches, soit le couper en 2 dans le sens de l'épaisseur et recouvrir les pommes de terre. Cuire au four (environ 220°) durant 25 minutes. C'est prêt !",
         "appliance":"Four",
-        "ustensils": ["Plat à gratin", "Couteau","Économe"]
+        "ustensils": ["Plat à gratin", "Couteau","Econome"]
     },{
         "id": 11,
         "name": "Salade tomate, mozzarella et pommes",
         "servings": 4,
         "ingredients":[
             {
-                "ingredient": "Tomates cerises",
+                "ingredient": "Tomate cerise",
                 "quantity": 250,
                 "unit": "grammes"
             },
@@ -381,7 +381,7 @@ const recipes = [
                 "unit": "tranches"
             }, 
             {
-                "ingredient": "Pommes",
+                "ingredient": "Pomme",
                 "quantity": 1
             },
             {
@@ -409,7 +409,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Pommes",
+                "ingredient": "Pomme",
                 "quantity": 8
             },
             {
@@ -426,7 +426,7 @@ const recipes = [
         "time": 40,
         "description": "Éplucher les fruits et les couper en morceaux, les mettre dans une casserole en ajoutant l'eau et le sucre vanillé. Laisser cuire 15 minutes en remuant régulièrement.",
         "appliance": "Casserole",
-        "ustensils": ["Couteau", "Économe"]
+        "ustensils": ["Couteau", "Econome"]
     },
     {
         "id": 13,
@@ -444,7 +444,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Échalote",
+                "ingredient": "Echalote",
                 "quantity": 2
 
             },
@@ -454,7 +454,7 @@ const recipes = [
                 "unit":"cuillère à soupe"
             },
             {
-                "ingredient": "huile d'olive",
+                "ingredient": "Huile d'olive",
                 "quantity": 2,
                 "unit": "cuillères à soupe"
             }
@@ -470,7 +470,7 @@ const recipes = [
         "servings": 2,
         "ingredients": [
             {
-                "ingredient": "Saucisse bretonne ou de toulouse",
+                "ingredient": "Saucisse bretonne ou de Toulouse",
                 "quantity": 2
             },
             {
@@ -569,7 +569,7 @@ const recipes = [
                 "unit":"tige"
             },
             {
-                "ingredient": "huile d'olives",
+                "ingredient": "Huile d'olive",
                 "quantity": 2,
                 "unit": "cuillères à soupe"
             }
@@ -685,7 +685,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Crème fraiche",
+                "ingredient": "Crème fraîche",
                 "quantity": 200,
                 "unit": "grammes"
             },
@@ -695,7 +695,7 @@ const recipes = [
                 "unit":"grammes"
             },
             {
-                "ingredient": "huile d'olive",
+                "ingredient": "Huile d'olive",
                 "quantity": 1,
                 "unit": "cuillère à soupe"
             }
@@ -720,7 +720,7 @@ const recipes = [
                 "quantity": 2
             },
             {
-                "ingredient": "Coulis de tomate",
+                "ingredient": "Coulis de tomates",
                 "quantity": 300,
                 "unit":"grammes"
             },
@@ -735,7 +735,7 @@ const recipes = [
                 "unit": "cl"
             },
             {
-                "ingredient": "Crème Fraiche",
+                "ingredient": "Crème fraîche",
                 "quantity" : 1,
                 "unit": "cuillère à soupe"
             }
@@ -805,7 +805,7 @@ const recipes = [
                 "quantity": 3
             },
             {
-                "ingredient": "Crème Fraîche",
+                "ingredient": "Crème fraîche",
                 "quantity": 20,
                 "unit": "cl"
             },
@@ -908,7 +908,7 @@ const recipes = [
                 "quantity": 1
             },
             {
-                "ingredient": "Huile d'olives"
+                "ingredient": "Huile d'olive"
             },
             {
                 "ingredient": "Oignon",
@@ -984,7 +984,7 @@ const recipes = [
                 "unit":"grammes"
             },
             {
-                "ingredient": "Crême fraîche",
+                "ingredient": "Crème fraîche",
                 "quantity": 10,
                 "unit": "cl"
             }
@@ -1069,7 +1069,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Petits poids",
+                "ingredient": "Petits pois",
                 "quantity": 100,
                 "unit":"grammes"
             },
@@ -1082,7 +1082,7 @@ const recipes = [
         "time": 60,
         "description":"Découper en cubes les carottes et pommes de terre. Faire revenir dans du beurre. Ajouter les lardons, une fois les lardons dorés, ajouter un grand verre d'eau. Ajouter les petit poids et les haricots verts ( tous deux pré cuits ). Ajouter Sel, poivre, thyms et laurier",
         "appliance": "Poële",
-        "ustensils":["Couteau", "Économe"]
+        "ustensils":["Couteau", "Econome"]
     },
     {
         "id": 32,
@@ -1186,7 +1186,7 @@ const recipes = [
         "time": 25,
         "description":"Eplucher les patates douces et coupez les en morceaux. Les faire cuire durant 20 minute dans une casserole d'eau bouillante. Passer au mixer en ajoutant la crème et l'huile d'olive à son gout. Salez, poivrez. Pressez l'orange et ajouter le jus à l'ensemble. Servir.",
         "appliance": "Mixer",
-        "ustensils":["Couteau", "Économe", "Cuillère en bois"]
+        "ustensils":["Couteau", "Econome", "Cuillère en bois"]
     },
     {
         "id": 35,
@@ -1281,7 +1281,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Huile d'olives",
+                "ingredient": "Huile d'olive",
                 "quantity": 25,
                 "unit": "cl"
             },
@@ -1509,7 +1509,7 @@ const recipes = [
                 "unit":"grammes"
             },
             {
-                "ingredient": "farine",
+                "ingredient": "Farine",
                 "quantity": 40,
                 "unit": "grammes"
             }
@@ -1610,7 +1610,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Crème Fraîche",
+                "ingredient": "Crème fraîche",
                 "quantity": 20,
                 "unit":"cl"
             }
@@ -1630,7 +1630,7 @@ const recipes = [
                 "quantity": 1
             },
             {
-                "ingredient": "Tomates pelées",
+                "ingredient": "Tomate pelée",
                 "quantity": 1,
                 "unit": "boite"
             },
@@ -1640,7 +1640,7 @@ const recipes = [
                 "unit": "barquette"
             },
             {
-                "ingredient": "Champignons de paris",
+                "ingredient": "Champignons de Paris",
                 "quantity": 1,
                 "unit":"boite"
             },
@@ -1651,7 +1651,7 @@ const recipes = [
             }
         ],
         "time": 40,
-        "description":"Étaler la pate a pizza. Ecraser les tomates pelées, les étaler sur la pâte, ajouter les lardons et les champignons. Ajouter le gruyère eet passer au four à 220° durant 20 minutes",
+        "description":"Étaler la pate a pizza. Ecraser les tomates pelées, les étaler sur la pâte, ajouter les lardons et les champignons. Ajouter le gruyère et passer au four à 220° durant 20 minutes",
         "appliance": "Four",
         "ustensils":["Rouleau à patisserie", "Râpe à fromage","Couteau"]
     },
@@ -1661,11 +1661,11 @@ const recipes = [
         "servings": 4,
         "ingredients": [
             {
-                "ingredient": "Bananes",
+                "ingredient": "Banane",
                 "quantity": 2
             },
             {
-                "ingredient": "Kiwis",
+                "ingredient": "Kiwi",
                 "quantity": 3
             },
             {
@@ -1703,7 +1703,7 @@ const recipes = [
                 "quantity": 6
             },
             {
-                "ingredient": "Poudre d'amendes",
+                "ingredient": "Poudre d'amande",
                 "quantity": 500,
                 "unit": "grammes"
             },
