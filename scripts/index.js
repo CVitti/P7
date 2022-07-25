@@ -30,6 +30,13 @@ let ustensileItems = [];
         // Création du code HMTL de la recette via la classe Recipe
         listArticles += new Recipe(recipesToDisplay[i]).recipeBlock;   
     }
+
+    // Si aucun résultat dans les recettes après la recherche, génération aléatoire de mots-clés parmis toutes les recettes existantes
+    if (listArticles == "") {
+        let recipeEx1 = Math.floor(Math.random() * recipes.length);
+        let recipeEx2 = Math.floor(Math.random() * recipes.length);
+        listArticles = `Aucune recette ne correspond à vos critères, vous pouvez chercher "${recipes[recipeEx1].name}" ou encore "${recipes[recipeEx2].name}"`;
+    }
     document.getElementById("recipeSection").innerHTML = listArticles;    
 }
 
@@ -229,28 +236,39 @@ function applyFilters(){
     // Appels des fonctions d'affichage des tags et recettes après avoir trié les recettes
     displayRecipes(filteredRecipes);
     displayTags();
-    addFiltersContent();
+    addFiltersContent(ingredientItems, appareilItems, ustensileItems);
 }
 
 
 /**
  * Parcoure les tableaux de chaque filtre pour en afficher les ingrédients/appareils/ustensiles restants
  */
-function addFiltersContent() {
+function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
     // Tri des tableaux recus en entrée avant affichage
-    ingredientItems = sortByName(ingredientItems);
-    appareilItems = sortByName(appareilItems);
-    ustensileItems = sortByName(ustensileItems);
+    arrayIngredients = sortByName(arrayIngredients);
+    arrayAppareils = sortByName(arrayAppareils);
+    arrayUstensiles = sortByName(arrayUstensiles);
     let listItems = "";
     let createdItems = null;
 
+    let similarArrays = (a, b) => {
+        if (a.length !== b.length) return false;
+        const uniqueValues = new Set([...a, ...b]);
+        for (const v of uniqueValues) {
+            const aCount = a.filter(e => e === v).length;
+            const bCount = b.filter(e => e === v).length;
+            if (aCount !== bCount) return false;
+        }
+        return true;
+        }
+
     // Ajout du contenu dans le filtre des ingrédients
-    if (ingredientItems.length == ingredientTags.length) {
+    if (arrayIngredients.length == 0 || similarArrays(arrayIngredients, ingredientTags)) {
         listItems += "Aucun filtre disponible";
     } else {        
-        for (let i = 0; i < ingredientItems.length; i++) {
-            if (!ingredientTags.includes(ingredientItems[i])) {
-                listItems += new FilterItem(ingredientItems[i]).filterItemBlock;
+        for (let i = 0; i < arrayIngredients.length; i++) {
+            if (!ingredientTags.includes(arrayIngredients[i])) {
+                listItems += new FilterItem(arrayIngredients[i]).filterItemBlock;
             }             
         }
     }        
@@ -269,12 +287,14 @@ function addFiltersContent() {
     listItems = "";
 
     // Ajout du contenu dans le filtre des appareils
-    if (appareilItems.length == appareilTags.length) {
+    
+
+    if (arrayAppareils.length == 0 || similarArrays(arrayAppareils, appareilTags)) {
         listItems += "Aucun filtre disponible";
     } else {        
-        for (let i = 0; i < appareilItems.length; i++) {
-            if (!appareilTags.includes(appareilItems[i])) {
-                listItems += new FilterItem(appareilItems[i]).filterItemBlock;
+        for (let i = 0; i < arrayAppareils.length; i++) {
+            if (!appareilTags.includes(arrayAppareils[i])) {
+                listItems += new FilterItem(arrayAppareils[i]).filterItemBlock;
             }             
         }
     } 
@@ -293,12 +313,12 @@ function addFiltersContent() {
     listItems = "";
 
     // Ajout du contenu dans le filtre des ustensiles
-    if (ustensileItems.length == ustensileTags.length) {
+    if (arrayUstensiles.length == 0 || similarArrays(arrayUstensiles, ustensileTags)) {
         listItems += "Aucun filtre disponible";
     } else {        
-        for (let i = 0; i < ustensileItems.length; i++) {
-            if (!ustensileTags.includes(ustensileItems[i])) {
-                listItems += new FilterItem(ustensileItems[i]).filterItemBlock;
+        for (let i = 0; i < arrayUstensiles.length; i++) {
+            if (!ustensileTags.includes(arrayUstensiles[i])) {
+                listItems += new FilterItem(arrayUstensiles[i]).filterItemBlock;
             }             
         }
     } 
@@ -317,6 +337,72 @@ function addFiltersContent() {
     listItems = "";
 }
 
+/**
+ * Filtre des items qui remontent dans la liste de chaque filtre en fonction de la recherche avancée
+ * @param {*} category Filtre à partir d'où la recherche est effectuée
+ * @param {*} content Valeur recherchée
+ */
+function advancedSearch(category, content) {
+    let block = null;
+    let searchedItems = [];
+
+    switch (category) {
+        case "ingredient":
+            block = document.getElementById("ingredientsList");
+            if (content != "") {
+                for (let i = 0; i < ingredientItems.length; i++) {
+                    const item = ingredientItems[i];
+                    if (item.toLowerCase().includes(content.toLowerCase())) {
+                        searchedItems.push(item);
+                    }
+                }
+                if (searchedItems == []) {
+                    searchedItems = [];
+                }
+                searchedItems;
+                addFiltersContent(searchedItems, appareilItems, ustensileItems);
+            } else {
+                applyFilters();
+            }
+            break;
+        case "appareil":
+            block = document.getElementById("appareilsList");
+            if (content != "") {
+                for (let i = 0; i < appareilItems.length; i++) {
+                    const item = appareilItems[i];
+                    if (item.toLowerCase().includes(content.toLowerCase())) {
+                        searchedItems.push(item);
+                    }
+                }
+                if (searchedItems == []) {
+                    searchedItems = [];
+                }
+                searchedItems;
+                addFiltersContent(ingredientItems, searchedItems, ustensileItems);
+            } else {
+                applyFilters();
+            }
+            break;
+        case "ustensile":
+            block = document.getElementById("ustensilesList");
+            if (content != "") {
+                for (let i = 0; i < ustensileItems.length; i++) {
+                    const item = ustensileItems[i];
+                    if (item.toLowerCase().includes(content.toLowerCase())) {
+                        searchedItems.push(item);
+                    }
+                }
+                if (searchedItems == []) {
+                    searchedItems = [];
+                }
+                searchedItems;
+                addFiltersContent(ingredientItems, appareilItems, searchedItems);
+            } else {
+                applyFilters();
+            }
+            break;
+    }
+}
 
 /**
  * Fonction de gestion des tags
@@ -330,12 +416,18 @@ function addFiltersContent() {
             switch (tagType) {
                 case "ingredient":
                     ingredientTags.push(content);
+                    // @ts-ignore
+                    document.getElementById("inputIngredient").value = "";
                     break;
                 case "appareil":
                     appareilTags.push(content);
+                    // @ts-ignore
+                    document.getElementById("inputAppareil").value = "";
                     break;
                 case "ustensile":
                     ustensileTags.push(content);
+                    // @ts-ignore
+                    document.getElementById("inputUstensile").value = "";
                     break;
             }
             applyFilters();
@@ -355,13 +447,6 @@ function addFiltersContent() {
             applyFilters();
             break;
     }
-}
-
-/**
- * Recherche faite via les input positionnés sur les filtres avancés
- */
-function advancedSearch() {
-    
 }
 
 /**
@@ -393,9 +478,18 @@ function advancedSearch() {
     });
 
     // Ajout d'un listener sur les champs de recherche dans les filtres avancés
-    document.querySelector("#inputIngredient").addEventListener("keyup", advancedSearch);
-    document.querySelector("#inputAppareil").addEventListener("keyup", advancedSearch);
-    document.querySelector("#inputUstensile").addEventListener("keyup", advancedSearch);
+    document.querySelector("#inputIngredient").addEventListener("keyup", (e) => {
+        // @ts-ignore
+        advancedSearch("ingredient", e.target.value);
+    });
+    document.querySelector("#inputAppareil").addEventListener("keyup", (e) => {
+        // @ts-ignore
+        advancedSearch("appareil", e.target.value);
+    });
+    document.querySelector("#inputUstensile").addEventListener("keyup", (e) => {
+        // @ts-ignore
+        advancedSearch("ustensile", e.target.value);
+    });
 }
 
 /**
