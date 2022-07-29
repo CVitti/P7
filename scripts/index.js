@@ -40,7 +40,7 @@ function displayRecipes(recipesToDisplay){
     document.getElementById("recipeSection").innerHTML = listArticles;    
 }
 
-/**0
+/**
  * Fonction qui parcoure les tags qui ont été sélectionnés afin de les afficher
  */
 function displayTags() {
@@ -95,6 +95,7 @@ function displayTags() {
 /**
  * Gestion de l'affichage des listes sous les filtres et de l'affichage du filtre en lui-même
  * @param {*} block Définit le block sur lequel le filtre doit être affiché/caché
+ * @param {*} action Définit l'action qui doit être effectuée sur le filtre (afficher/masquer)
  */
  function toggleFiltersList(block, action) {
     let childrenList = null;
@@ -236,6 +237,9 @@ function applyFilters(){
 
 /**
  * Parcoure les tableaux de chaque filtre pour en afficher les ingrédients/appareils/ustensiles restants
+ * @param {*} arrayIngredients Tableau contenant les ingrédients restants
+ * @param {*} arrayAppareils Tableau contenant les appareils restants
+ * @param {*} arrayUstensiles Tableau contenant les ustensiles restants
  */
 function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
     // Tri des tableaux recus en entrée avant affichage
