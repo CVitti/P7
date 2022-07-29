@@ -22,13 +22,13 @@ let ustensileItems = [];
  * Affichage des recettes
  * @param {*} recipesToDisplay Tableau filtré des recettes à afficher
  */
- function displayRecipes(recipesToDisplay){
+function displayRecipes(recipesToDisplay){
     let listArticles = "";
 
     // Création d'un article pour chaque recette parcourue dans le tableau
-    for (let i = 0; i < recipesToDisplay.length; i++) {
+    for (const currentRecipe of recipesToDisplay) {
         // Création du code HMTL de la recette via la classe Recipe
-        listArticles += new Recipe(recipesToDisplay[i]).recipeBlock;   
+        listArticles += new Recipe(currentRecipe).recipeBlock;
     }
 
     // Si aucun résultat dans les recettes après la recherche, génération aléatoire de mots-clés parmis toutes les recettes existantes
@@ -48,22 +48,23 @@ function displayTags() {
 
     // Création des tags des ingrédients sélectionnés
     let listTags = "";
-    for (let index = 0; index < ingredientTags.length; index++) {
-        listTags += new Tag(currentTagId, "ingredient", ingredientTags[index]).tagBlock;      
+    for (const tag of ingredientTags) {
+        listTags += new Tag(currentTagId, "ingredient", tag).tagBlock;      
         // Incrémentation du conteur de tags créés pour chaque ID donné
         currentTagId++;
     }
 
     // Création des tags des appareils sélectionnés
-    for (let index = 0; index < appareilTags.length; index++) {
-        listTags += new Tag(currentTagId, "appareil", appareilTags[index]).tagBlock;
+    for (const tag of appareilTags) {
+        listTags += new Tag(currentTagId, "appareil", tag).tagBlock;
         // Incrémentation du conteur de tags créés pour chaque ID donné
         currentTagId++;
     }
 
     // Création des tags des ustensiles sélectionnés
-    for (let index = 0; index < ustensileTags.length; index++) {
-        listTags += new Tag(currentTagId, "ustensile", ustensileTags[index]).tagBlock;
+    for (const tag of ustensileTags) {
+        listTags += new Tag(currentTagId, "ustensile", tag).tagBlock;
+        // Incrémentation du conteur de tags créés pour chaque ID donné
         currentTagId++;
     }
 
@@ -71,8 +72,7 @@ function displayTags() {
 
     // Ajout des listeners pour supprimer les tags des ingrédients filtrés
     let createdTags = document.getElementById("divTags").children;
-    for (let index = 0; index < createdTags.length; index++) {
-        const tag = createdTags[index];
+    for (const tag of createdTags) {
         let type = "";
         // @ts-ignore
         if (ingredientTags.includes(tag.innerText)) {
@@ -88,7 +88,7 @@ function displayTags() {
         tag.lastElementChild.addEventListener("click", () =>{
             // @ts-ignore
             manageTag("delete", type, tag.innerText);            
-        })        
+        })
     }
 }
 
@@ -149,9 +149,8 @@ function applyFilters(){
         filteredRecipes = recipes;
     } else {
         // Boucle sur toutes les recettes pour tester les correspondances
-        for (let index = 0; index < recipes.length; index++) {
-            
-            const recipe = recipes[index];
+        for (const recipe of recipes) {
+
             let canBeDisplayed = true;
             
             // Test de correspondance avec la recherche principale si non vide
@@ -169,10 +168,8 @@ function applyFilters(){
 
             // Test de correspondance entre les tags Ingrédient et la recette
             if (ingredientTags.length > 0) {
-                for (let index = 0; index < ingredientTags.length; index++) {
-                    const currentIngredient = ingredientTags[index];
-                    const foundIngredient = recipe.ingredients.findIndex(list => list.ingredient.includes(currentIngredient));
-                    if(foundIngredient == -1 && canBeDisplayed){
+                for (const tag of ingredientTags) {
+                    if(recipe.ingredients.findIndex(list => list.ingredient.includes(tag)) == -1 && canBeDisplayed){
                         canBeDisplayed = false;
                     }
                 }
@@ -180,9 +177,8 @@ function applyFilters(){
 
             // Test de correspondance entre les tags Appareil et la recette
             if (appareilTags.length > 0) {
-                for (let index = 0; index < appareilTags.length; index++) {
-                    const currentAppareil = appareilTags[index];
-                    if(!recipe.appliance.includes(currentAppareil) && canBeDisplayed){
+                for (const tag of appareilTags) {
+                    if(!recipe.appliance.includes(tag) && canBeDisplayed){
                         canBeDisplayed = false;
                     }
                 }
@@ -190,10 +186,8 @@ function applyFilters(){
 
             // Test de correspondance entre les tags Ustensiles et la recette
             if (ustensileTags.length > 0) {
-                for (let index = 0; index < ustensileTags.length; index++) {
-                    const currentUstensile = ustensileTags[index];
-                    const foundUstensile = recipe.ustensils.findIndex(list => list.includes(currentUstensile));
-                    if(foundUstensile == -1 && canBeDisplayed){
+                for (const tag of ustensileTags) {
+                    if(recipe.ustensils.findIndex(list => list.includes(tag)) == -1 && canBeDisplayed){
                         canBeDisplayed = false;
                     }
                 }
@@ -210,13 +204,13 @@ function applyFilters(){
     ingredientItems = [];
     appareilItems = [];
     ustensileItems = [];
-    for (let i = 0; i < filteredRecipes.length; i++) {
-        let currentRecipe = filteredRecipes[i];
+
+    for (const currentRecipe of filteredRecipes) {
 
         // Boucle qui parcoure les ingrédients de la recette
-        for (let j = 0; j < currentRecipe.ingredients.length; j++) {
-            if (!ingredientItems.includes(currentRecipe.ingredients[j].ingredient)) {
-                ingredientItems.push(currentRecipe.ingredients[j].ingredient);
+        for (const ingredient of currentRecipe.ingredients) {
+            if (!ingredientItems.includes(ingredient.ingredient)) {
+                ingredientItems.push(ingredient.ingredient);
             }
         }
 
@@ -226,9 +220,9 @@ function applyFilters(){
         }
 
         // Boucle qui parcoure les ustensiles de la recette
-        for (const ustensil of currentRecipe.ustensils) {
-            if (!ustensileItems.includes(ustensil)) {
-                ustensileItems.push(ustensil);
+        for (const ustensile of currentRecipe.ustensils) {
+            if (!ustensileItems.includes(ustensile)) {
+                ustensileItems.push(ustensile);
             }
         }
     }
@@ -251,12 +245,13 @@ function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
     let listItems = "";
     let createdItems = null;
 
+    // Variable contenant true ou false selon la comparaison de 2 tableaux
     let similarArrays = (a, b) => {
         if (a.length !== b.length) return false;
         const uniqueValues = new Set([...a, ...b]);
-        for (const v of uniqueValues) {
-            const aCount = a.filter(e => e === v).length;
-            const bCount = b.filter(e => e === v).length;
+        for (const value of uniqueValues) {
+            const aCount = a.filter(e => e === value).length;
+            const bCount = b.filter(e => e === value).length;
             if (aCount !== bCount) return false;
         }
         return true;
@@ -266,48 +261,46 @@ function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
     if (arrayIngredients.length == 0 || similarArrays(arrayIngredients, ingredientTags)) {
         listItems += "Aucun filtre disponible";
     } else {        
-        for (let i = 0; i < arrayIngredients.length; i++) {
-            if (!ingredientTags.includes(arrayIngredients[i])) {
-                listItems += new FilterItem(arrayIngredients[i]).filterItemBlock;
-            }             
+        for (const ingredient of arrayIngredients) {
+            if (!ingredientTags.includes(ingredient)) {
+                listItems += new FilterItem(ingredient).filterItemBlock;
+            }
         }
     }        
     document.getElementById("ingredientsList").innerHTML = listItems;
     
     // Ajout des listeners pour créer les tags depuis la liste filtrée des ingrédients
     createdItems = document.getElementById("ingredientsList").children;
-    for (let index = 0; index < createdItems.length; index++) {
-        const item = createdItems[index];
+    for (const item of createdItems) {
         item.addEventListener("click", () =>{
             // @ts-ignore
             manageTag("add", "ingredient", item.innerText);            
-        })        
+        })
     }
+
     // Reset de la variable après avoir ajouté les items du filtre
     listItems = "";
 
     // Ajout du contenu dans le filtre des appareils
-    
 
     if (arrayAppareils.length == 0 || similarArrays(arrayAppareils, appareilTags)) {
         listItems += "Aucun filtre disponible";
-    } else {        
-        for (let i = 0; i < arrayAppareils.length; i++) {
-            if (!appareilTags.includes(arrayAppareils[i])) {
-                listItems += new FilterItem(arrayAppareils[i]).filterItemBlock;
-            }             
-        }
+    } else {     
+        for (const appareil of arrayAppareils) {
+            if (!appareilTags.includes(appareil)) {
+                listItems += new FilterItem(appareil).filterItemBlock;
+            }
+        }   
     } 
     document.getElementById("appareilsList").innerHTML = listItems;
     
     // Ajout des listeners pour créer les tags depuis la liste filtrée des appareils
     createdItems = document.getElementById("appareilsList").children;
-    for (let index = 0; index < createdItems.length; index++) {
-        const item = createdItems[index];
+    for (const item of createdItems) {
         item.addEventListener("click", () =>{
-            // @ts-ignore 
+            // @ts-ignore
             manageTag("add", "appareil", item.innerText);            
-        })        
+        })
     }
     // Reset de la variable après avoir ajouté les items du filtre
     listItems = "";
@@ -316,22 +309,21 @@ function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
     if (arrayUstensiles.length == 0 || similarArrays(arrayUstensiles, ustensileTags)) {
         listItems += "Aucun filtre disponible";
     } else {        
-        for (let i = 0; i < arrayUstensiles.length; i++) {
-            if (!ustensileTags.includes(arrayUstensiles[i])) {
-                listItems += new FilterItem(arrayUstensiles[i]).filterItemBlock;
-            }             
+        for (const ustensile of arrayUstensiles) {
+            if (!ustensileTags.includes(ustensile)) {
+                listItems += new FilterItem(ustensile).filterItemBlock;
+            }
         }
     } 
     document.getElementById("ustensilesList").innerHTML = listItems;
     
     // Ajout des listeners pour créer les tags depuis la liste filtrée des appareils
     createdItems = document.getElementById("ustensilesList").children;
-    for (let index = 0; index < createdItems.length; index++) {
-        const item = createdItems[index];
+    for (const item of createdItems) {
         item.addEventListener("click", () =>{
-            // @ts-ignore 
+            // @ts-ignore
             manageTag("add", "ustensile", item.innerText);            
-        })        
+        })
     }
     // Reset de la variable après avoir ajouté les items du filtre
     listItems = "";
@@ -350,8 +342,7 @@ function advancedSearch(category, content) {
         case "ingredient":
             block = document.getElementById("ingredientsList");
             if (content != "") {
-                for (let i = 0; i < ingredientItems.length; i++) {
-                    const item = ingredientItems[i];
+                for (const item of ingredientItems) {
                     if (item.toLowerCase().includes(content.toLowerCase())) {
                         searchedItems.push(item);
                     }
@@ -368,8 +359,7 @@ function advancedSearch(category, content) {
         case "appareil":
             block = document.getElementById("appareilsList");
             if (content != "") {
-                for (let i = 0; i < appareilItems.length; i++) {
-                    const item = appareilItems[i];
+                for (const item of appareilItems) {
                     if (item.toLowerCase().includes(content.toLowerCase())) {
                         searchedItems.push(item);
                     }
@@ -386,8 +376,7 @@ function advancedSearch(category, content) {
         case "ustensile":
             block = document.getElementById("ustensilesList");
             if (content != "") {
-                for (let i = 0; i < ustensileItems.length; i++) {
-                    const item = ustensileItems[i];
+                for (const item of ustensileItems) {
                     if (item.toLowerCase().includes(content.toLowerCase())) {
                         searchedItems.push(item);
                     }
