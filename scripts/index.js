@@ -150,8 +150,8 @@ function applyFilters(){
         filteredRecipes = recipes;
     } else {
         // Boucle sur toutes les recettes pour tester les correspondances
-        recipes.forEach(recipe => {
-
+        for (const recipe of recipes) {
+            
             let canBeDisplayed = true;
             
             // Test de correspondance avec la recherche principale si non vide
@@ -169,36 +169,36 @@ function applyFilters(){
 
             // Test de correspondance entre les tags Ingrédient et la recette
             if (ingredientTags.length > 0) {
-                ingredientTags.forEach(tag => {
+                for (const tag of ingredientTags) {
                     if(recipe.ingredients.findIndex(list => list.ingredient.includes(tag)) == -1 && canBeDisplayed){
                         canBeDisplayed = false;
                     }
-                });
+                };
             }
 
             // Test de correspondance entre les tags Appareil et la recette
             if (appareilTags.length > 0) {
-                appareilTags.forEach( tag => {
+                for (const tag of appareilTags) {
                     if(!recipe.appliance.includes(tag) && canBeDisplayed){
                     canBeDisplayed = false;
                     }
-                });
+                };
             }
 
             // Test de correspondance entre les tags Ustensiles et la recette
             if (ustensileTags.length > 0) {
-                ustensileTags.forEach(tag => {
+                for (const tag of ustensileTags) {
                     if(recipe.ustensils.findIndex(list => list.includes(tag)) == -1 && canBeDisplayed){
                         canBeDisplayed = false;
                     }
-                });
+                };
             }
 
             // Si validation de tous les filtres, ajour de la recette au tableau à afficher
             if (canBeDisplayed) {
                 filteredRecipes.push(recipe);
             }
-        });
+        };
     }
 
     // Parcours de toutes les recettes filtrées pour récupérer les ingrédients/appareils/ustensiles uniques
@@ -206,14 +206,14 @@ function applyFilters(){
     appareilItems = [];
     ustensileItems = [];
 
-    filteredRecipes.forEach(currentRecipe => {
+    for (const currentRecipe of filteredRecipes) {
 
         // Boucle qui parcoure les ingrédients de la recette
-        currentRecipe.ingredients.forEach(ingredient => {
+        for (const ingredient of currentRecipe.ingredients) {
             if (!ingredientItems.includes(ingredient.ingredient)) {
                 ingredientItems.push(ingredient.ingredient);
             }
-        });
+        };
 
         // Boucle qui parcoure les appareils de la recette
         if (!appareilItems.includes(currentRecipe.appliance)) {
@@ -221,12 +221,12 @@ function applyFilters(){
         }
 
         // Boucle qui parcoure les ustensiles de la recette
-        currentRecipe.ustensils.forEach(ustensile => {
+        for (const ustensile of currentRecipe.ustensils) {
             if (!ustensileItems.includes(ustensile)) {
                 ustensileItems.push(ustensile);
             }
-        });
-    });
+        };
+    };
 
     // Appels des fonctions d'affichage des tags et recettes après avoir trié les recettes
     displayRecipes(filteredRecipes);
