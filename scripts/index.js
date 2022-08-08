@@ -19,18 +19,18 @@ let appareilItems = [];
 let ustensileItems = [];
 
 /**
- * Affichage des recettes
- * @param {*} recipesToDisplay Tableau filtré des recettes à afficher
- */
+* Affichage des recettes
+* @param {*} recipesToDisplay Tableau filtré des recettes à afficher
+*/
 function displayRecipes(recipesToDisplay){
     let listArticles = "";
-
+    
     // Création d'un article pour chaque recette parcourue dans le tableau
     for (const currentRecipe of recipesToDisplay) {
         // Création du code HMTL de la recette via la classe Recipe
         listArticles += new Recipe(currentRecipe).recipeBlock;
     }
-
+    
     // Si aucun résultat dans les recettes après la recherche, génération aléatoire de mots-clés parmis toutes les recettes existantes
     if (listArticles == "") {
         let recipeEx1 = Math.floor(Math.random() * recipes.length);
@@ -41,11 +41,11 @@ function displayRecipes(recipesToDisplay){
 }
 
 /**
- * Fonction qui parcoure les tags qui ont été sélectionnés afin de les afficher
- */
+* Fonction qui parcoure les tags qui ont été sélectionnés afin de les afficher
+*/
 function displayTags() {
     document.getElementById("divTags").innerHTML = "";
-
+    
     // Création des tags des ingrédients sélectionnés
     let listTags = "";
     for (const tag of ingredientTags) {
@@ -53,23 +53,23 @@ function displayTags() {
         // Incrémentation du conteur de tags créés pour chaque ID donné
         currentTagId++;
     }
-
+    
     // Création des tags des appareils sélectionnés
     for (const tag of appareilTags) {
         listTags += new Tag(currentTagId, "appareil", tag).tagBlock;
         // Incrémentation du conteur de tags créés pour chaque ID donné
         currentTagId++;
     }
-
+    
     // Création des tags des ustensiles sélectionnés
     for (const tag of ustensileTags) {
         listTags += new Tag(currentTagId, "ustensile", tag).tagBlock;
         // Incrémentation du conteur de tags créés pour chaque ID donné
         currentTagId++;
     }
-
+    
     document.getElementById("divTags").innerHTML += listTags;
-
+    
     // Ajout des listeners pour supprimer les tags des ingrédients filtrés
     let createdTags = document.getElementById("divTags").children;
     for (const tag of createdTags) {
@@ -77,14 +77,14 @@ function displayTags() {
         // @ts-ignore
         if (ingredientTags.includes(tag.innerText)) {
             type = "ingredient";
-        // @ts-ignore
+            // @ts-ignore
         } else if(appareilTags.includes(tag.innerText)){
             type = "appareil";
-        // @ts-ignore
+            // @ts-ignore
         } else if(ustensileTags.includes(tag.innerText)){
             type = "ustensile";
         }
-
+        
         tag.lastElementChild.addEventListener("click", () =>{
             // @ts-ignore
             manageTag("delete", type, tag.innerText);            
@@ -93,50 +93,50 @@ function displayTags() {
 }
 
 /**
- *  * Gestion de l'affichage des listes sous les filtres et de l'affichage du filtre en lui-même
- * @param {*} block Définit le block sur lequel le filtre doit être affiché/caché
- * @param {*} action Définit l'action à faire sur le filtre (afficher/masquer)
- */
- function toggleFiltersList(block, action) {
+*  * Gestion de l'affichage des listes sous les filtres et de l'affichage du filtre en lui-même
+* @param {*} block Définit le block sur lequel le filtre doit être affiché/caché
+* @param {*} action Définit l'action à faire sur le filtre (afficher/masquer)
+*/
+function toggleFiltersList(block, action) {
     let childrenList = null;
     switch (block) {
         case "ingredients":
-            childrenList = document.getElementById("filterIngredients").children;
-            if (action == "display") {
-                document.getElementById("filterIngredients").classList.add("active");
-                document.getElementById("filterAppareils").classList.remove("active");
-                document.getElementById("filterUstensiles").classList.remove("active");                
-            }else if(action == "hide"){
-                document.getElementById("filterIngredients").classList.remove("active");
-            }
-            break;
+        childrenList = document.getElementById("filterIngredients").children;
+        if (action == "display") {
+            document.getElementById("filterIngredients").classList.add("active");
+            document.getElementById("filterAppareils").classList.remove("active");
+            document.getElementById("filterUstensiles").classList.remove("active");                
+        }else if(action == "hide"){
+            document.getElementById("filterIngredients").classList.remove("active");
+        }
+        break;
         case "appareils":
-            childrenList = document.getElementById("filterAppareils").children;
-            if (action == "display") {
-                document.getElementById("filterAppareils").classList.add("active");
-                document.getElementById("filterIngredients").classList.remove("active");
-                document.getElementById("filterUstensiles").classList.remove("active");                
-            }else if(action == "hide"){
-                document.getElementById("filterAppareils").classList.remove("active");
-            }
-            break;
+        childrenList = document.getElementById("filterAppareils").children;
+        if (action == "display") {
+            document.getElementById("filterAppareils").classList.add("active");
+            document.getElementById("filterIngredients").classList.remove("active");
+            document.getElementById("filterUstensiles").classList.remove("active");                
+        }else if(action == "hide"){
+            document.getElementById("filterAppareils").classList.remove("active");
+        }
+        break;
         case "ustensiles":
-            childrenList = document.getElementById("filterUstensiles").children;
-            if (action == "display") {
-                document.getElementById("filterUstensiles").classList.add("active");
-                document.getElementById("filterIngredients").classList.remove("active");
-                document.getElementById("filterAppareils").classList.remove("active");                
-            }else if(action == "hide"){
-                document.getElementById("filterUstensiles").classList.remove("active");
-            }
-            break;
+        childrenList = document.getElementById("filterUstensiles").children;
+        if (action == "display") {
+            document.getElementById("filterUstensiles").classList.add("active");
+            document.getElementById("filterIngredients").classList.remove("active");
+            document.getElementById("filterAppareils").classList.remove("active");                
+        }else if(action == "hide"){
+            document.getElementById("filterUstensiles").classList.remove("active");
+        }
+        break;
     }
 }
 
 /**
- * Application des filtres sélectionnés via la recherche et les tags pour filtrer la liste des recettes et des nouveaux filtres possibles à ajouter
- * Appel des fonction d'affichage des recettes et des tags à la fin
- */
+* Application des filtres sélectionnés via la recherche et les tags pour filtrer la liste des recettes et des nouveaux filtres possibles à ajouter
+* Appel des fonction d'affichage des recettes et des tags à la fin
+*/
 function applyFilters(){
     let filteredRecipes = [];
     // @ts-ignore
@@ -144,80 +144,63 @@ function applyFilters(){
     if (mainFilter.length < 3) {
         mainFilter = "";
     }
-
-    // Si aucun filtre appliqué, chargement de toutes les recettes
-    if (mainFilter == "" && ingredientTags.length == 0 && appareilTags.length == 0 && ustensileTags.length == 0) {
-        filteredRecipes = recipes;
-    } else {
-        // Boucle sur toutes les recettes pour tester les correspondances
-        recipes.forEach(recipe => {
-
-            let canBeDisplayed = true;
-            
-            // Test de correspondance avec la recherche principale si non vide
-            if (mainFilter != "") {
-                const containsIngredients = recipe.ingredients.findIndex(list => list.ingredient.toLowerCase().includes(mainFilter.toLowerCase()));
-
-                if (recipe.name.toLowerCase().includes(mainFilter.toLowerCase()) || recipe.description.toLowerCase().includes(mainFilter.toLowerCase()) || containsIngredients != -1) {
-                    canBeDisplayed = true;
-                }else{
-                    canBeDisplayed = false;
-                }
-            }
-
-            // Test de correspondance entre les tags Ingrédient et la recette
-            if (ingredientTags.length > 0) {
-                ingredientTags.forEach(tag => {
-                    if(recipe.ingredients.findIndex(list => list.ingredient.includes(tag)) == -1 && canBeDisplayed){
-                        canBeDisplayed = false;
-                    }
-                });
-            }
-
-            // Test de correspondance entre les tags Appareil et la recette
-            if (appareilTags.length > 0) {
-                appareilTags.forEach( tag => {
-                    if(!recipe.appliance.includes(tag) && canBeDisplayed){
-                    canBeDisplayed = false;
-                    }
-                });
-            }
-
-            // Test de correspondance entre les tags Ustensiles et la recette
-            if (ustensileTags.length > 0) {
-                ustensileTags.forEach(tag => {
-                    if(recipe.ustensils.findIndex(list => list.includes(tag)) == -1 && canBeDisplayed){
-                        canBeDisplayed = false;
-                    }
-                });
-            }
-
-            // Si validation de tous les filtres, ajour de la recette au tableau à afficher
-            if (canBeDisplayed) {
-                filteredRecipes.push(recipe);
-            }
-        });
+    
+    // Chargement de toutes les recettes dès le départ avant tri si au moins un tag est appliqué ou la recherche principale contient + de 3 caractères
+    filteredRecipes = recipes;
+    
+    // Test de correspondance avec la recherche principale si non vide
+    if (mainFilter != "") {
+        filteredRecipes = filteredRecipes.filter(recipe => 
+            recipe.name.toLowerCase().includes(mainFilter.toLowerCase())
+            || recipe.description.toLowerCase().includes(mainFilter.toLowerCase()) 
+            || recipe.ingredients.findIndex(list => list.ingredient.toLowerCase().includes(mainFilter.toLowerCase())) != -1
+        )
     }
-
+        
+    // Test de correspondance entre les tags Ingrédient et la recette
+    ingredientTags.forEach(tag => 
+        filteredRecipes = filteredRecipes.filter(recipe =>
+            recipe.ingredients.some((ing) => 
+                ing.ingredient == tag
+            )
+        )
+    )
+                
+    // Test de correspondance entre les tags Appareil et la recette
+    appareilTags.forEach(tag => 
+        filteredRecipes = filteredRecipes.filter(recipe =>
+            recipe.appliance.includes(tag)
+        )
+    )
+                        
+    // Test de correspondance entre les tags Ustensiles et la recette
+    ustensileTags.forEach(tag => 
+        filteredRecipes = filteredRecipes.filter(recipe =>
+            recipe.ustensils.some((ust) => 
+                ust == tag
+            )
+        )
+    )
+                                
     // Parcours de toutes les recettes filtrées pour récupérer les ingrédients/appareils/ustensiles uniques
     ingredientItems = [];
     appareilItems = [];
     ustensileItems = [];
-
+    
     filteredRecipes.forEach(currentRecipe => {
-
+        
         // Boucle qui parcoure les ingrédients de la recette
         currentRecipe.ingredients.forEach(ingredient => {
             if (!ingredientItems.includes(ingredient.ingredient)) {
                 ingredientItems.push(ingredient.ingredient);
             }
         });
-
+        
         // Boucle qui parcoure les appareils de la recette
         if (!appareilItems.includes(currentRecipe.appliance)) {
             appareilItems.push(currentRecipe.appliance);
         }
-
+        
         // Boucle qui parcoure les ustensiles de la recette
         currentRecipe.ustensils.forEach(ustensile => {
             if (!ustensileItems.includes(ustensile)) {
@@ -234,11 +217,11 @@ function applyFilters(){
 
 
 /**
- * Parcoure les tableaux de chaque filtre pour en afficher les ingrédients/appareils/ustensiles restants
- * @param {*} arrayIngredients Tableau passé en entrée contenant les ingrédients restants
- * @param {*} arrayAppareils Tableau passé en entrée contenant les appareils restants
- * @param {*} arrayUstensiles Tableau passé en entrée contenant les ustensiles restants
- */
+* Parcoure les tableaux de chaque filtre pour en afficher les ingrédients/appareils/ustensiles restants
+* @param {*} arrayIngredients Tableau passé en entrée contenant les ingrédients restants
+* @param {*} arrayAppareils Tableau passé en entrée contenant les appareils restants
+* @param {*} arrayUstensiles Tableau passé en entrée contenant les ustensiles restants
+*/
 function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
     // Tri des tableaux recus en entrée avant affichage
     arrayIngredients = sortByName(arrayIngredients);
@@ -246,7 +229,7 @@ function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
     arrayUstensiles = sortByName(arrayUstensiles);
     let listItems = "";
     let createdItems = null;
-
+    
     // Variable contenant true ou false selon la comparaison de 2 tableaux
     let similarArrays = (a, b) => {
         if (a.length !== b.length) return false;
@@ -257,8 +240,8 @@ function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
             if (aCount !== bCount) return false;
         }
         return true;
-        }
-
+    }
+    
     // Ajout du contenu dans le filtre des ingrédients
     if (arrayIngredients.length == 0 || similarArrays(arrayIngredients, ingredientTags)) {
         listItems += "Aucun filtre disponible";
@@ -279,12 +262,12 @@ function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
             manageTag("add", "ingredient", item.innerText);            
         })
     }
-
+    
     // Reset de la variable après avoir ajouté les items du filtre
     listItems = "";
-
+    
     // Ajout du contenu dans le filtre des appareils
-
+    
     if (arrayAppareils.length == 0 || similarArrays(arrayAppareils, appareilTags)) {
         listItems += "Aucun filtre disponible";
     } else {     
@@ -306,7 +289,7 @@ function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
     }
     // Reset de la variable après avoir ajouté les items du filtre
     listItems = "";
-
+    
     // Ajout du contenu dans le filtre des ustensiles
     if (arrayUstensiles.length == 0 || similarArrays(arrayUstensiles, ustensileTags)) {
         listItems += "Aucun filtre disponible";
@@ -332,122 +315,122 @@ function addFiltersContent(arrayIngredients, arrayAppareils, arrayUstensiles) {
 }
 
 /**
- * Filtre des items qui remontent dans la liste de chaque filtre en fonction de la recherche avancée
- * @param {*} category Filtre à partir d'où la recherche est effectuée
- * @param {*} content Valeur recherchée
- */
+* Filtre des items qui remontent dans la liste de chaque filtre en fonction de la recherche avancée
+* @param {*} category Filtre à partir d'où la recherche est effectuée
+* @param {*} content Valeur recherchée
+*/
 function advancedSearch(category, content) {
     let block = null;
     let searchedItems = [];
-
+    
     switch (category) {
         case "ingredient":
-            block = document.getElementById("ingredientsList");
-            if (content != "") {
-                for (const item of ingredientItems) {
-                    if (item.toLowerCase().includes(content.toLowerCase())) {
-                        searchedItems.push(item);
-                    }
+        block = document.getElementById("ingredientsList");
+        if (content != "") {
+            for (const item of ingredientItems) {
+                if (item.toLowerCase().includes(content.toLowerCase())) {
+                    searchedItems.push(item);
                 }
-                if (searchedItems == []) {
-                    searchedItems = [];
-                }
-                searchedItems;
-                addFiltersContent(searchedItems, appareilItems, ustensileItems);
-            } else {
-                applyFilters();
             }
-            break;
+            if (searchedItems == []) {
+                searchedItems = [];
+            }
+            searchedItems;
+            addFiltersContent(searchedItems, appareilItems, ustensileItems);
+        } else {
+            applyFilters();
+        }
+        break;
         case "appareil":
-            block = document.getElementById("appareilsList");
-            if (content != "") {
-                for (const item of appareilItems) {
-                    if (item.toLowerCase().includes(content.toLowerCase())) {
-                        searchedItems.push(item);
-                    }
+        block = document.getElementById("appareilsList");
+        if (content != "") {
+            for (const item of appareilItems) {
+                if (item.toLowerCase().includes(content.toLowerCase())) {
+                    searchedItems.push(item);
                 }
-                if (searchedItems == []) {
-                    searchedItems = [];
-                }
-                searchedItems;
-                addFiltersContent(ingredientItems, searchedItems, ustensileItems);
-            } else {
-                applyFilters();
             }
-            break;
+            if (searchedItems == []) {
+                searchedItems = [];
+            }
+            searchedItems;
+            addFiltersContent(ingredientItems, searchedItems, ustensileItems);
+        } else {
+            applyFilters();
+        }
+        break;
         case "ustensile":
-            block = document.getElementById("ustensilesList");
-            if (content != "") {
-                for (const item of ustensileItems) {
-                    if (item.toLowerCase().includes(content.toLowerCase())) {
-                        searchedItems.push(item);
-                    }
+        block = document.getElementById("ustensilesList");
+        if (content != "") {
+            for (const item of ustensileItems) {
+                if (item.toLowerCase().includes(content.toLowerCase())) {
+                    searchedItems.push(item);
                 }
-                if (searchedItems == []) {
-                    searchedItems = [];
-                }
-                searchedItems;
-                addFiltersContent(ingredientItems, appareilItems, searchedItems);
-            } else {
-                applyFilters();
             }
-            break;
+            if (searchedItems == []) {
+                searchedItems = [];
+            }
+            searchedItems;
+            addFiltersContent(ingredientItems, appareilItems, searchedItems);
+        } else {
+            applyFilters();
+        }
+        break;
     }
 }
 
 /**
- * Fonction de gestion des tags
- * @param {*} eventType Valeur "add" ou "delete" pour gérer s'il faut créer le tag ou le supprimer s'il existe déjà
- * @param {*} tagType Gestion de la mise en forme selon le filtre d'origine du tag (ingredient, appareil, ustensile)
- * @param {*} content Texte à afficher dans le tag (Ex : Coco)
- */
- function manageTag(eventType, tagType, content) {
+* Fonction de gestion des tags
+* @param {*} eventType Valeur "add" ou "delete" pour gérer s'il faut créer le tag ou le supprimer s'il existe déjà
+* @param {*} tagType Gestion de la mise en forme selon le filtre d'origine du tag (ingredient, appareil, ustensile)
+* @param {*} content Texte à afficher dans le tag (Ex : Coco)
+*/
+function manageTag(eventType, tagType, content) {
     switch (eventType) {
         case "add":
-            switch (tagType) {
-                case "ingredient":
-                    ingredientTags.push(content);
-                    // @ts-ignore
-                    document.getElementById("inputIngredient").value = "";
-                    break;
-                case "appareil":
-                    appareilTags.push(content);
-                    // @ts-ignore
-                    document.getElementById("inputAppareil").value = "";
-                    break;
-                case "ustensile":
-                    ustensileTags.push(content);
-                    // @ts-ignore
-                    document.getElementById("inputUstensile").value = "";
-                    break;
-            }
-            applyFilters();
+        switch (tagType) {
+            case "ingredient":
+            ingredientTags.push(content);
+            // @ts-ignore
+            document.getElementById("inputIngredient").value = "";
             break;
+            case "appareil":
+            appareilTags.push(content);
+            // @ts-ignore
+            document.getElementById("inputAppareil").value = "";
+            break;
+            case "ustensile":
+            ustensileTags.push(content);
+            // @ts-ignore
+            document.getElementById("inputUstensile").value = "";
+            break;
+        }
+        applyFilters();
+        break;
         case "delete":
-            switch (tagType) {
-                case "ingredient":
-                    ingredientTags = arrayRemove(ingredientTags, content);
-                    break;
-                case "appareil":
-                    appareilTags = arrayRemove(appareilTags, content);
-                    break;
-                case "ustensile":
-                    ustensileTags = arrayRemove(ustensileTags, content);
-                    break;
-            }
-            applyFilters();
+        switch (tagType) {
+            case "ingredient":
+            ingredientTags = arrayRemove(ingredientTags, content);
             break;
+            case "appareil":
+            appareilTags = arrayRemove(appareilTags, content);
+            break;
+            case "ustensile":
+            ustensileTags = arrayRemove(ustensileTags, content);
+            break;
+        }
+        applyFilters();
+        break;
     }
 }
 
 /**
- * Création de listeners au chargement de la page
- */
- function createListenersOnLoad(){
+* Création de listeners au chargement de la page
+*/
+function createListenersOnLoad(){
     // Ajout d'un listener sur le champ de recherche et la loupe pour activer la recherche dès que 3 caractères ou plus sont entrés
     document.querySelector("#inputMainSearch").addEventListener("keyup", applyFilters);
     document.querySelector("#mainSearchButton").addEventListener("keyup", applyFilters);
-
+    
     // Ajout des listeners sur les boutons des filtres pour afficher/réduire les listes
     document.querySelector("#displayIngredientsList").addEventListener("click", () =>{
         toggleFiltersList("ingredients", "display")
@@ -467,7 +450,7 @@ function advancedSearch(category, content) {
     document.querySelector("#hideUstensilesList").addEventListener("click", () =>{
         toggleFiltersList("ustensiles", "hide")
     });
-
+    
     // Ajout d'un listener sur les champs de recherche dans les filtres avancés
     document.querySelector("#inputIngredient").addEventListener("keyup", (e) => {
         // @ts-ignore
@@ -484,8 +467,8 @@ function advancedSearch(category, content) {
 }
 
 /**
- * Fonction d'initialisation de la page, affichage par défaut lors du premier chargement
- */
+* Fonction d'initialisation de la page, affichage par défaut lors du premier chargement
+*/
 function init(){
     applyFilters();
     createListenersOnLoad();    
